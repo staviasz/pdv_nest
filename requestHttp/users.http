@@ -1,0 +1,36 @@
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+"name":"teste teste",
+"email": "teste@teste.com",
+"password":"@Teste12"
+}
+
+###
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+  "email": "teste@teste.com",
+  "password":"@Teste12"
+}
+
+###
+GET http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCRpYjVXUGpZdVBIU2diV3YzY2hZNm9PL2o2VjhBdTcxNThkQUNKc3V1OWhHLmVYektzSGxGeSIsImlhdCI6MTcwNjEyMDE3MSwiZXhwIjoxNzA2MjA2NTcxfQ.t1rSG9wkWVsStVy95CCMuJVKumlQ8K3w3FOyKCltpVw
+
+
+###
+PATCH http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCRpYjVXUGpZdVBIU2diV3YzY2hZNm9PL2o2VjhBdTcxNThkQUNKc3V1OWhHLmVYektzSGxGeSIsImlhdCI6MTcwNjEyMDE3MSwiZXhwIjoxNzA2MjA2NTcxfQ.t1rSG9wkWVsStVy95CCMuJVKumlQ8K3w3FOyKCltpVw
+Content-Type: application/json
+
+{
+  "email": "teste1@teste.com"
+}
+
+
+###
+DELETE http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCRpYjVXUGpZdVBIU2diV3YzY2hZNm9PL2o2VjhBdTcxNThkQUNKc3V1OWhHLmVYektzSGxGeSIsImlhdCI6MTcwNjEyMDE3MSwiZXhwIjoxNzA2MjA2NTcxfQ.t1rSG9wkWVsStVy95CCMuJVKumlQ8K3w3FOyKCltpVw
