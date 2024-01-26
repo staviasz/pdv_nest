@@ -20,7 +20,7 @@ DELETE http://localhost:3000/category/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjEyNTU3MSwiZXhwIjoxNzA2MjExOTcxfQ.N0UkMce40jQsd8Z2VRCMLaK2S6-MAlnXSODxhctE8JY
 
 ###
-GET http://localhost:3000/category/1
+GET http://localhost:3000/category/5
 
 ###
 GET http://localhost:3000/category

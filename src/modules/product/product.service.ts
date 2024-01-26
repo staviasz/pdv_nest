@@ -77,7 +77,7 @@ export class ProductService {
           OR: [{ description }, { id: productId }],
         },
       }),
-      this.prisma.category.findFirstOrThrow({
+      this.prisma.category.findUniqueOrThrow({
         where: {
           id: categoryId,
         },
