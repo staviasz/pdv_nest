@@ -6,12 +6,12 @@ Content-Type: application/json
   "clientId": 1,
   "products": [
     {
-      "productId": 6,
-      "quantity": 2
+      "productId": 8,
+      "quantity": 1
     },
     {
-      "productId": 7,
-      "quantity": 3
+      "productId": 5,
+      "quantity": 1
     }
   ]
 }

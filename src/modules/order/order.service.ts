@@ -31,25 +31,26 @@ export class OrderService {
     const cleanedProducts = this.cleanProducts(createOrderDto.products);
 
     const products = await this.findProducts(cleanedProducts);
-    const queries = [
-      this.updateStock(cleanedProducts),
-      this.createOrder(createOrderDto, products, cleanedProducts),
-    ];
-    const [, order] = await Promise.all(queries);
 
-    await this.createOrderProduct(
-      products,
-      cleanedProducts,
-      (order as PrismaOrder).id,
-    );
+    return await this.prisma.$transaction(async (txtPrisma: PrismaService) => {
+      const queries = [
+        this.updateStock(cleanedProducts, txtPrisma),
+        this.createOrder(createOrderDto, products, cleanedProducts, txtPrisma),
+      ];
+      const [, order] = await Promise.all(queries);
+      await this.createOrderProduct(
+        products,
+        cleanedProducts,
+        (order as PrismaOrder).id,
+        txtPrisma,
+      );
 
-    const response = {
-      orderId: (order as PrismaOrder).id,
-      clientId: createOrderDto.clientId,
-      products: Object.values(cleanedProducts),
-    };
-
-    return response;
+      return {
+        orderId: (order as PrismaOrder).id,
+        clientId: createOrderDto.clientId,
+        products: Object.values(cleanedProducts),
+      };
+    });
   }
 
   async findAll() {
@@ -107,7 +108,10 @@ export class OrderService {
     }
   }
 
-  private async updateStock(cleanedProducts: Array<ProductDto>) {
+  private async updateStock(
+    cleanedProducts: Array<ProductDto>,
+    txtPrisma: PrismaService,
+  ) {
     const updates: Array<Prisma.ProductUpdateManyArgs> = cleanedProducts.map(
       update => ({
         where: { id: update.productId },
@@ -115,9 +119,9 @@ export class OrderService {
       }),
     );
 
-    return await Promise.all(
+    await Promise.all(
       updates.map(update =>
-        this.prisma.product.update({
+        txtPrisma.product.update({
           where: { id: update.where.id as number },
           data: update.data,
         }),
@@ -141,8 +145,9 @@ export class OrderService {
     createOrderDto: CreateOrderDto,
     products: Array<PrismaProduct>,
     cleanedProducts: Array<ProductDto>,
+    txtPrisma: PrismaService,
   ): Promise<PrismaOrder> {
-    return await this.prisma.order.create({
+    return await txtPrisma.order.create({
       data: {
         observation: createOrderDto.observation,
         totalAmount: this.totalAmount(products, cleanedProducts),
@@ -155,6 +160,7 @@ export class OrderService {
     products: Array<PrismaProduct>,
     cleanedProducts: Array<ProductDto>,
     orderId: number,
+    txtPrisma: PrismaService,
   ) {
     const orderProductData: Array<Prisma.OrderProductCreateManyInput> =
       cleanedProducts.map(product => ({
@@ -166,7 +172,7 @@ export class OrderService {
         ).value,
       }));
 
-    return await this.prisma.orderProduct.createMany({
+    return await txtPrisma.orderProduct.createMany({
       data: orderProductData,
     });
   }
