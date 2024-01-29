@@ -7,7 +7,6 @@ export class PrismaNotFoundException implements ExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-
     const message = exception.meta?.cause ?? exception.message;
 
     exception.code === 'P2025'

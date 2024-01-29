@@ -12,7 +12,7 @@ interface JwtPayload {
 export class AuthService {
   private readonly accessKey = process.env.JWT_ACCESS_KEY;
   generateToken(payload: JwtPayload): string {
-    return jwt.sign(payload, this.accessKey, { expiresIn: '1d' });
+    return jwt.sign(payload, this.accessKey, { expiresIn: '7d' });
   }
 
   verifyToken(token: string) {

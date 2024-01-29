@@ -1,0 +1,25 @@
+POST http://localhost:3000/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjQ2MTU0NywiZXhwIjoxNzA3MDY2MzQ3fQ.NK8OvsNE40avdTEBbGWZclGyQaNEB5_vLJJ8m77Nkco
+Content-Type: application/json
+
+{
+  "clientId": 1,
+  "products": [
+    {
+      "productId": 6,
+      "quantity": 2
+    },
+    {
+      "productId": 7,
+      "quantity": 3
+    }
+  ]
+}
+
+###
+GET http://localhost:3000/order/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjQ2MTU0NywiZXhwIjoxNzA3MDY2MzQ3fQ.NK8OvsNE40avdTEBbGWZclGyQaNEB5_vLJJ8m77Nkco
+
+###
+GET http://localhost:3000/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjQ2MTU0NywiZXhwIjoxNzA3MDY2MzQ3fQ.NK8OvsNE40avdTEBbGWZclGyQaNEB5_vLJJ8m77Nkco
