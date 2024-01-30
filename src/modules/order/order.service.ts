@@ -1,5 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import compileTemplate from 'src/utils/sendEmails/compileHtml';
+import sendEmail from 'src/utils/sendEmails/sendEmail';
+import {
+  ContextClientEmail,
+  ContextHtmlEmail,
+} from 'src/utils/sendEmails/types/email';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto, ProductDto } from './dto/create-order.dto';
 
@@ -24,15 +30,16 @@ export class OrderService {
   constructor(private prisma: PrismaService) {}
 
   async create(createOrderDto: CreateOrderDto) {
-    await this.prisma.client.findUniqueOrThrow({
-      where: { id: createOrderDto.clientId },
-    });
+    const client = await this.findClientAndVerifyAddress(
+      createOrderDto.clientId,
+    );
 
     const cleanedProducts = this.cleanProducts(createOrderDto.products);
 
     const products = await this.findProducts(cleanedProducts);
 
-    return await this.prisma.$transaction(async (txtPrisma: PrismaService) => {
+    let response = {};
+    await this.prisma.$transaction(async (txtPrisma: PrismaService) => {
       const queries = [
         this.updateStock(cleanedProducts, txtPrisma),
         this.createOrder(createOrderDto, products, cleanedProducts, txtPrisma),
@@ -45,12 +52,21 @@ export class OrderService {
         txtPrisma,
       );
 
-      return {
+      response = {
         orderId: (order as PrismaOrder).id,
         clientId: createOrderDto.clientId,
         products: Object.values(cleanedProducts),
       };
     });
+
+    this.oderEmail(
+      { ...client },
+      response['orderId'],
+      products,
+      cleanedProducts,
+    );
+
+    return response;
   }
 
   async findAll() {
@@ -175,5 +191,52 @@ export class OrderService {
     return await txtPrisma.orderProduct.createMany({
       data: orderProductData,
     });
+  }
+
+  private async oderEmail(
+    client: ContextClientEmail,
+    orderId: number,
+    products: Array<PrismaProduct>,
+    cleanedProducts: Array<ProductDto>,
+  ) {
+    const productsContext = products.map(item => {
+      const noImage = 'https://i.ibb.co/nQsWkjb/produto-sem-imagem.webp';
+
+      return {
+        imageUrl: item.image || noImage,
+        name: item.description,
+        quantity: cleanedProducts.find(product => product.productId === item.id)
+          .quantity,
+        price: Number((item.value / 100).toFixed(2)),
+      };
+    });
+
+    const context: ContextHtmlEmail = {
+      ...client,
+      orderId,
+      products: productsContext,
+      totalValue: Number(
+        (this.totalAmount(products, cleanedProducts) / 100).toFixed(2),
+      ),
+    };
+
+    const html = await compileTemplate('./src/templates/email.html', context);
+    sendEmail({ ...client }, html);
+  }
+
+  private async findClientAndVerifyAddress(clientId: number) {
+    const client = await this.prisma.client.findUniqueOrThrow({
+      where: { id: clientId },
+    });
+
+    for (const key in client) {
+      if (!client[key]) {
+        throw new BadRequestException(
+          'To place an order is necessary an address',
+        );
+      }
+    }
+
+    return client;
   }
 }
