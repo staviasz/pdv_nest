@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
@@ -17,19 +18,21 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty()
   @IsPositiveOrZero()
+  @Type(() => Number)
   stockAmount: number;
 
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
+  @Type(() => Number)
   value: number;
 
-  @IsString()
   @IsOptional()
   image?: string;
 
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
+  @Type(() => Number)
   categoryId: number;
 }

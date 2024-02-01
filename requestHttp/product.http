@@ -1,5 +1,5 @@
 POST http://localhost:3000/product
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjIxMjE1NiwiZXhwIjoxNzA2Mjk4NTU2fQ.T7PhxL-WR4M6t5zsT5RkuFoo774ERIzxQqXMaHJTlB8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjcxNTA5MCwiZXhwIjoxNzA3MzE5ODkwfQ.oRCu-3KnpSk_J9_LuwIQnoMlqz4ov4Y4ZmYxy7gTjDI
 Content-Type: application/json
 
 {
@@ -22,11 +22,67 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/product/4
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjEyNTU3MSwiZXhwIjoxNzA2MjExOTcxfQ.N0UkMce40jQsd8Z2VRCMLaK2S6-MAlnXSODxhctE8JY
+DELETE http://localhost:3000/product/10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjcxNTA5MCwiZXhwIjoxNzA3MzE5ODkwfQ.oRCu-3KnpSk_J9_LuwIQnoMlqz4ov4Y4ZmYxy7gTjDI
 
 ###
 GET http://localhost:3000/product/4
 
 ###
 GET http://localhost:3000/product
+
+###
+POST http://localhost:3000/product
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjcxNTA5MCwiZXhwIjoxNzA3MzE5ODkwfQ.oRCu-3KnpSk_J9_LuwIQnoMlqz4ov4Y4ZmYxy7gTjDI
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
+
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="description"
+
+teste description 84
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="stockAmount"
+
+5
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="value"
+
+10
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="categoryId"
+
+2
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="image"; filename="***Marcação de exames (teste slug) 2.jpg"
+Content-Type: image/jpg
+
+./src/assets/***Marcação de exames (teste slug) 2.jpg
+------WebKitFormBoundary1234--
+
+###
+PATCH http://localhost:3000/product/10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6InRlc3RlIHRlc3RlIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJwYXNzd29yZCI6IiQyYiQwOCR4MU9CZVUzNnlwZ21ZTDRMV0p1aDN1VnRLQzlyNmQudkFpdjN2aDUwQnI2ZU42VmZ5RHUzYSIsImlhdCI6MTcwNjcxNTA5MCwiZXhwIjoxNzA3MzE5ODkwfQ.oRCu-3KnpSk_J9_LuwIQnoMlqz4ov4Y4ZmYxy7gTjDI
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary12345
+
+------WebKitFormBoundary12345
+Content-Disposition: form-data; name="description"
+
+teste description 85
+------WebKitFormBoundary12345
+Content-Disposition: form-data; name="stockAmount"
+
+5
+------WebKitFormBoundary12345
+Content-Disposition: form-data; name="value"
+
+10
+------WebKitFormBoundary12345
+Content-Disposition: form-data; name="categoryId"
+
+2
+------WebKitFormBoundary12345
+Content-Disposition: form-data; name="image"; filename="***Marcação de exames (teste slug) 2.jpg"
+Content-Type: image/jpg
+
+./src/assets/***Marcação de exames (teste slug) 2.jpg
+------WebKitFormBoundary12345--

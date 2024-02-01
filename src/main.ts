@@ -6,7 +6,11 @@ import { PrismaNotFoundException } from './filter/prisma/not-found-exception.fil
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   app.useGlobalFilters(new PrismaNotFoundException());
 
   await app.listen(3000);

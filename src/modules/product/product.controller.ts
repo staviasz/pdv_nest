@@ -5,11 +5,16 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseFilePipe,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { IsValidImageFile } from 'src/utils/validator/IsValidImageFile';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductService } from './product.service';
@@ -19,9 +24,24 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('image'))
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+        validators: [
+          new IsValidImageFile({
+            mimetypes: ['image/jpeg', 'image/png', 'image/jpg'],
+          }),
+        ],
+        errorHttpStatusCode: 404,
+      }),
+    )
+    image?: Express.Multer.File,
+  ) {
+    return this.productService.create(createProductDto, image);
   }
 
   @Get()
@@ -35,9 +55,25 @@ export class ProductController {
   }
 
   @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('image'))
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+        validators: [
+          new IsValidImageFile({
+            mimetypes: ['image/jpeg', 'image/png', 'image/jpg'],
+          }),
+        ],
+        errorHttpStatusCode: 404,
+      }),
+    )
+    image?: Express.Multer.File,
+  ) {
+    return this.productService.update(+id, updateProductDto, image);
   }
 
   @HttpCode(204)
